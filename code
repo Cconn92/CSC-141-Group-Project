@@ -1,0 +1,40 @@
+Connect 3
+
+
+3 match game with a twist that the pieces explode when they connect
+ 
+
+The game will be a connect 3 game like candy crush, you will earn points for each connection and every time you connect 3 it makes an explosion on the screen. The game will end when there is no possible connection of 3. Your connections must be 3 or more of the same color. The controls will be using the mouse cursor to click the piece over.
+The objective of the game is to get the highest score before you lose. Players will connect pieces, creating combos and adding points to their score.
+There is only one level but different  modes. We will need explosion sounds, sprites of the different individual pieces and how to coordinate between them.
+
+
+!! added score and bomb piece to game !!
+
+
+
+The work will be split 5 ways. Two members have to work on the effect and sound of the game. They must make or choose what effects and sounds will be used for what action.  Then one member will work on the mechanics of the game. Making sure the game actually works and there are no errors in the code. One of us will work on the design of the game. This member will manage the design and looks of the game, what colors are being used, what pieces are involved and the overall look of the game. Someone can work on the mechanism of actually making the pieces be able to connect and not connect, implementing color into the code.
+
+ 
+
+Work split 
+
+ Sound & effects: Alex
+
+(2)Mechanism (connect and not connect): Chris, Adrien
+
+Design: amirah
+
+Game Logic: Hector
+
+ 
+
+Classes 
+
+game piece (red octagon, blue square, yellow triangle)
+Explosion & sound effects/ effects
+Mega piece (clears board when connected with two other pieces)
+Connect and not connect mechanism
+Game logic/ settings
+Game board
+
