@@ -1,7 +1,7 @@
 import pygame
 import random
 
-# --- CONFIG ---
+# configuration
 ROWS = 8
 COLS = 8
 TILE_SIZE = 64
@@ -30,7 +30,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 font = pygame.font.SysFont(None, 36)
 
-# --- BOARD HELPERS ---
+# board helpers
 
 def random_tile():
     """Spawn normal tiles, but with a small chance of creating a bomb."""
@@ -45,7 +45,7 @@ board = create_board()
 selected = None
 score = 0
 
-# --- DRAWING ---
+# drawing
 
 def draw_board():
     for r in range(ROWS):
@@ -61,7 +61,7 @@ def draw_board():
     screen.blit(text, (10, ROWS*TILE_SIZE + 10))
 
 
-# --- GAME LOGIC ---
+# game logic
 
 def swap(a, b):
     (r1, c1), (r2, c2) = a, b
@@ -133,7 +133,7 @@ def refill():
                 board[r][c] = random_tile()
 
 
-# --- MAIN LOOP ---
+# main loop
 
 running = True
 while running:
@@ -170,4 +170,5 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
 
