@@ -1,0 +1,36 @@
+# main loop
+running = True
+while running:
+    clock.tick(60)
+    screen.fill((40, 40, 40))
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mx, my = pygame.mouse.get_pos()
+            if my < ROWS * TILE_SIZE:  # avoid clicking the score area
+                r, c = my // TILE_SIZE, mx // TILE_SIZE
+
+                if selected is None:
+                    selected = (r, c)
+                else:
+                    r2, c2 = r, c
+                    if abs(r2 - selected[0]) + abs(c2 - selected[1]) == 1:
+                        swap(selected, (r2, c2))
+                        if not find_matches():  # If no match, undo
+                            swap(selected, (r2, c2))
+                    selected = None
+
+    # Auto-clear matches every frame
+    matches = find_matches()
+    if matches:
+        clear_matches(matches)
+        apply_gravity()
+        refill()
+
+    draw_board()
+    pygame.display.update()
+
+pygame.quit()
