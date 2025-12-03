@@ -1,1 +1,70 @@
 # game logic
+
+def swap(a, b):
+    (r1, c1), (r2, c2) = a, b
+    board[r1][c1], board[r2][c2] = board[r2][c2], board[r1][c1]
+
+def explode_bomb(r, c, matched):
+    """Add all 8 surrounding tiles to matched set."""
+    for dr in [-1, 0, 1]:
+        for dc in [-1, 0, 1]:
+            rr, cc = r + dr, c + dc
+            if 0 <= rr < ROWS and 0 <= cc < COLS:
+                matched.add((rr, cc))
+
+def find_matches():
+    """Return a set of all tiles that should be cleared."""
+    matched = set()
+
+    # Horizontal matches
+    for r in range(ROWS):
+        for c in range(COLS - 2):
+            a, b, d = board[r][c], board[r][c+1], board[r][c+2]
+
+            # Normal match-3
+            if a == b == d:
+                matched |= {(r, c), (r, c+1), (r, c+2)}
+
+            # If any part of match contains a bomb
+            if BOMB_INDEX in (a, b, d):
+                if a == BOMB_INDEX: explode_bomb(r, c, matched)
+                if b == BOMB_INDEX: explode_bomb(r, c+1, matched)
+                if d == BOMB_INDEX: explode_bomb(r, c+2, matched)
+
+    # Vertical matches
+    for c in range(COLS):
+        for r in range(ROWS - 2):
+            a, b, d = board[r][c], board[r+1][c], board[r+2][c]
+
+            if a == b == d:
+                matched |= {(r, c), (r+1, c), (r+2, c)}
+
+            if BOMB_INDEX in (a, b, d):
+                if a == BOMB_INDEX: explode_bomb(r, c, matched)
+                if b == BOMB_INDEX: explode_bomb(r+1, c, matched)
+                if d == BOMB_INDEX: explode_bomb(r+2, c, matched)
+
+    return matched
+
+def clear_matches(matches):
+    """Remove matched tiles and add score."""
+    global score
+    score += len(matches) * 10
+    for r, c in matches:
+        board[r][c] = None
+
+def apply_gravity():
+    for c in range(COLS):
+        empty = 0
+        for r in range(ROWS-1, -1, -1):
+            if board[r][c] is None:
+                empty += 1
+            elif empty > 0:
+                board[r+empty][c] = board[r][c]
+                board[r][c] = None
+
+def refill():
+    for r in range(ROWS):
+        for c in range(COLS):
+            if board[r][c] is None:
+                board[r][c] = random_tile()
