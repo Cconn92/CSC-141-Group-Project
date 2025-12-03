@@ -1,0 +1,58 @@
+# --- CONFIG ---
+ROWS = 8
+COLS = 8
+TILE_SIZE = 64
+
+# Normal candy colors
+COLORS = [
+    (255, 0, 0),      # red
+    (0, 255, 0),      # green
+    (0, 0, 255),      # blue
+    (255, 255, 0),    # yellow
+    (255, 165, 0),    # orange
+    (128, 0, 128)     # purple
+]
+
+# Bomb color (grey)
+BOMB_COLOR = (150, 150, 150)
+
+
+COLORS.append(BOMB_COLOR)
+BOMB_INDEX = len(COLORS) - 1
+
+pygame.init()
+WIDTH = COLS * TILE_SIZE
+HEIGHT = ROWS * TILE_SIZE + 60
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 36)
+
+# --- BOARD HELPERS ---
+
+def random_tile():
+    """Spawn normal tiles, but with a small chance of creating a bomb."""
+    if random.random() < 0.05:  # 5% bomb chance
+        return BOMB_INDEX
+    return random.randint(0, BOMB_INDEX - 1)
+
+def create_board():
+    return [[random_tile() for _ in range(COLS)] for _ in range(ROWS)]
+
+board = create_board()
+selected = None
+score = 0
+
+# --- DRAWING ---
+
+def draw_board():
+    for r in range(ROWS):
+        for c in range(COLS):
+            color = COLORS[board[r][c]]
+            pygame.draw.rect(screen, color,
+                (c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE))
+            pygame.draw.rect(screen, (0, 0, 0),
+                (c*TILE_SIZE, r*TILE_SIZE, TILE_SIZE, TILE_SIZE), 2)
+
+    # Draw score
+    text = font.render(f"Score: {score}", True, (255, 255, 255))
+    screen.blit(text, (10, ROWS*TILE_SIZE + 10))
