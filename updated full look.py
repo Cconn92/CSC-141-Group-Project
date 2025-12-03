@@ -19,7 +19,7 @@ COLORS = [
 # Bomb color (grey)
 BOMB_COLOR = (150, 150, 150)
 
-# Add bomb to color list (it will be last index)
+
 COLORS.append(BOMB_COLOR)
 BOMB_INDEX = len(COLORS) - 1
 
@@ -170,3 +170,4 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
